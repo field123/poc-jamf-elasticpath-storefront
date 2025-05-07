@@ -158,6 +158,44 @@ export function CartItem({
                 {formatPrice(item.custom_inputs.partnerPriceTotal)}
               </span>
             )}
+
+            {/* Display proration information if available */}
+            {item.custom_inputs?.prorateMultiplier !== undefined && (
+              <span className="text-sm text-black/60">
+                Prorate Multiplier:{" "}
+                {(item.custom_inputs.prorateMultiplier * 100).toFixed(2)}%
+              </span>
+            )}
+            {item.custom_inputs?.proratedListPrice && (
+              <span className="text-sm text-black/60">
+                Prorated List Price:{" "}
+                {formatPrice(item.custom_inputs.proratedListPrice)}
+              </span>
+            )}
+
+            {/* Display amendment information if available */}
+            {(item.custom_inputs?.amendmentStartDate ||
+              item.custom_inputs?.amendmentEndDate) && (
+              <div className="text-sm text-black/60 mt-2 border-t border-gray-100 pt-2">
+                <span className="font-medium">Amendment Period</span>
+                {item.custom_inputs?.amendmentStartDate && (
+                  <div>
+                    Start:{" "}
+                    {new Date(
+                      item.custom_inputs.amendmentStartDate,
+                    ).toLocaleDateString()}
+                  </div>
+                )}
+                {item.custom_inputs?.amendmentEndDate && (
+                  <div>
+                    End:{" "}
+                    {new Date(
+                      item.custom_inputs.amendmentEndDate,
+                    ).toLocaleDateString()}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
           <div className="flex h-7 gap-2 flex-col">
             <span className="font-medium">

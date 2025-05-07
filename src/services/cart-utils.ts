@@ -54,14 +54,20 @@ export type DynamicPricingResponseItem = {
   quantity: number;
   price: number;
   listPrice: number;
+  proratedListPrice?: number;
   regularPrice: number;
   partnerPrice: number;
   totalPartnerDiscountPercentage: number;
-  totalDiscounted: number;
+  totalDiscounted?: number;
   listPriceTotal: number;
   regularPriceTotal: number;
   partnerPriceTotal: number;
   priceTotal: number;
+  prorateMultiplier?: number;
+  amendment?: {
+    startDate: string;
+    endDate: string;
+  };
 };
 
 /**
@@ -100,6 +106,10 @@ export function convertDynamicPricingResponseToCustomItem(
       listPriceTotal: response.listPriceTotal,
       regularPriceTotal: response.regularPriceTotal,
       priceTotal: response.priceTotal,
+      proratedListPrice: response.proratedListPrice,
+      prorateMultiplier: response.prorateMultiplier,
+      amendmentStartDate: response.amendment?.startDate,
+      amendmentEndDate: response.amendment?.endDate,
     },
   };
 }

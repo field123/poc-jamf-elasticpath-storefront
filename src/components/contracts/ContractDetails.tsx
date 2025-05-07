@@ -1087,19 +1087,6 @@ export function ContractDetails({
                                     for {amendQuantity} units
                                   </div>
                                 )}
-                                {!pricesByProductId[selectedLineItem.product_id]
-                                  .error &&
-                                  pricesByProductId[selectedLineItem.product_id]
-                                    .breakdown?.discount > 0 && (
-                                    <div className="text-sm text-green-600 mt-1">
-                                      {
-                                        pricesByProductId[
-                                          selectedLineItem.product_id
-                                        ].breakdown.discount
-                                      }
-                                      % discount applied
-                                    </div>
-                                  )}
 
                                 {/* Detailed Pricing Breakdown */}
                                 {!pricesByProductId[selectedLineItem.product_id]
@@ -1280,6 +1267,86 @@ export function ContractDetails({
                                                 %
                                               </td>
                                             </tr>
+                                          )}
+
+                                          {/* Prorated pricing information */}
+                                          {pricesByProductId[
+                                            selectedLineItem.product_id
+                                          ].breakdown.prorateMultiplier && (
+                                            <tr className="border-t border-gray-100 mt-2">
+                                              <td className="py-1 text-gray-500">
+                                                Prorate Multiplier:
+                                              </td>
+                                              <td className="py-1 text-right">
+                                                {(
+                                                  pricesByProductId[
+                                                    selectedLineItem.product_id
+                                                  ].breakdown
+                                                    .prorateMultiplier * 100
+                                                ).toFixed(2)}
+                                                %
+                                              </td>
+                                            </tr>
+                                          )}
+
+                                          {pricesByProductId[
+                                            selectedLineItem.product_id
+                                          ].breakdown.proratedListPrice && (
+                                            <tr>
+                                              <td className="py-1 text-gray-500">
+                                                Prorated List Price:
+                                              </td>
+                                              <td className="py-1 text-right">
+                                                {formatPrice(
+                                                  pricesByProductId[
+                                                    selectedLineItem.product_id
+                                                  ].breakdown.proratedListPrice,
+                                                  pricesByProductId[
+                                                    selectedLineItem.product_id
+                                                  ].currency,
+                                                )}
+                                              </td>
+                                            </tr>
+                                          )}
+
+                                          {/* Amendment information */}
+                                          {pricesByProductId[
+                                            selectedLineItem.product_id
+                                          ].breakdown.amendment && (
+                                            <>
+                                              <tr className="border-t border-gray-100 mt-4">
+                                                <td
+                                                  colSpan={2}
+                                                  className="py-2 font-medium text-gray-700"
+                                                >
+                                                  Amendment Details
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <td className="py-1 text-gray-500">
+                                                  Start Date:
+                                                </td>
+                                                <td className="py-1 text-right">
+                                                  {new Date(
+                                                    pricesByProductId[
+                                                      selectedLineItem.product_id
+                                                    ].breakdown.amendment.startDate,
+                                                  ).toLocaleDateString()}
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <td className="py-1 text-gray-500">
+                                                  End Date:
+                                                </td>
+                                                <td className="py-1 text-right">
+                                                  {new Date(
+                                                    pricesByProductId[
+                                                      selectedLineItem.product_id
+                                                    ].breakdown.amendment.endDate,
+                                                  ).toLocaleDateString()}
+                                                </td>
+                                              </tr>
+                                            </>
                                           )}
                                         </tbody>
                                       </table>

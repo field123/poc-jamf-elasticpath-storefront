@@ -28,13 +28,19 @@ export type PriceCalculationResponse = {
       totalAfterDiscount: number;
       partnerPrice: number;
       totalPartnerDiscountPercentage: number;
-      totalDiscounted: number;
+      totalDiscounted?: number;
       listPrice: number;
       regularPrice: number;
       partnerPriceTotal: number;
       listPriceTotal: number;
       regularPriceTotal: number;
       priceTotal: number;
+      proratedListPrice?: number;
+      prorateMultiplier?: number;
+      amendment?: {
+        startDate: string;
+        endDate: string;
+      };
     };
   };
   error?: string;
@@ -132,6 +138,9 @@ export async function calculateContractItemPrice(
             listPriceTotal: product.listPriceTotal,
             regularPriceTotal: product.regularPriceTotal,
             priceTotal: product.priceTotal,
+            proratedListPrice: product.proratedListPrice,
+            prorateMultiplier: product.prorateMultiplier,
+            amendment: product.amendment,
           },
         },
       };

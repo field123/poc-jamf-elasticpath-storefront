@@ -145,9 +145,14 @@ export async function getDynamicPricing(request: DynamicPricingRequest) {
     ...item,
     price: Math.ceil(item.price),
     listPrice: Math.ceil(item.listPrice),
+    proratedListPrice: item.proratedListPrice
+      ? Math.ceil(item.proratedListPrice)
+      : undefined,
     regularPrice: Math.ceil(item.regularPrice),
     partnerPrice: Math.ceil(item.partnerPrice),
-    totalDiscounted: Math.ceil(item.totalDiscounted),
+    totalDiscounted: item.totalDiscounted
+      ? Math.ceil(item.totalDiscounted)
+      : undefined,
     totalPartnerDiscountPercentage: Math.ceil(
       item.totalPartnerDiscountPercentage,
     ),
@@ -155,6 +160,9 @@ export async function getDynamicPricing(request: DynamicPricingRequest) {
     listPriceTotal: Math.ceil(item.listPriceTotal),
     regularPriceTotal: Math.ceil(item.regularPriceTotal),
     priceTotal: Math.ceil(item.priceTotal),
+    // Preserve the amendment object and prorateMultiplier unchanged
+    amendment: item.amendment,
+    prorateMultiplier: item.prorateMultiplier,
   }));
 
   if (responseBody) {
